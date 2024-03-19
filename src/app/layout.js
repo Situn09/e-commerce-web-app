@@ -1,5 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Image from "next/image";
+import discountImg from "../../public/images/DiscountBanner.png";
+import headerImg from "../../public/images/TopHeader.png";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +14,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Image src={headerImg} alt="headerImg" style={{ width: "100%" }} />
+        <Image src={discountImg} alt="headerImg" style={{ width: "100%" }} />
+
+        {children}
+      </body>
     </html>
   );
 }
