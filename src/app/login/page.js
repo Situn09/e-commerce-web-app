@@ -44,7 +44,7 @@ var Email = {
   },
 };
 
-export default function logIn() {
+export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState(null);

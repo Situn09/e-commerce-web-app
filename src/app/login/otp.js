@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function userOtp({ otp, email }) {
+export default function UserOtp({ otp, email }) {
   const router = useRouter();
   const [userOtp, setuserOtp] = useState(new Array(8).fill(""));
   const swa = email.substring(0, 3);

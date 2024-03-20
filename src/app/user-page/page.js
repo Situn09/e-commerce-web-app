@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function userPage() {
+export default function UserPage() {
   const [userData, setUserData] = useState([]);
-  const [check, setCheck] = useState(false);
   const checkBoxRefs = useRef([]);
   const [lowerLimit, setlowerLimit] = useState(0);
   useEffect(() => {
