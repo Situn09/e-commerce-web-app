@@ -10,7 +10,6 @@ export default function UserPage() {
       .then((resp) => resp.json())
       .then((data) => {
         setUserData(data);
-        console.log(data);
       })
       .catch((err) => console.warn(err));
   }, [lowerLimit]);
@@ -42,12 +41,6 @@ export default function UserPage() {
                       placeholder="Enter"
                       className=" mb-5 h-[24px] w-[24px] border-2"
                       defaultChecked={item.completed ? true : false}
-                      // value={item.completed ? "true" : "false"}
-                      // onClick={() => {
-                      //   checkBoxRefs.current[index].checked =
-                      //     !checkBoxRefs.current[index].checked;
-                      //   console.log(checkBoxRefs.current[index].checked);
-                      // }}
                     />
                     <label
                       htmlFor={`item ${index}`}

@@ -6,10 +6,11 @@ import React, { useEffect, useRef, useState } from "react";
 export default function UserOtp({ otp, email }) {
   const router = useRouter();
   const [userOtp, setuserOtp] = useState(new Array(8).fill(""));
+  const [finalOtp, setFinalOtp] = useState(null);
   const swa = email.substring(0, 3);
   const inputRefs = useRef([]);
   const verifyCheck = () => {
-    if (otp == userOtp) {
+    if (otp == finalOtp) {
       router.push("/user-page");
     } else {
       alert("Enter right OTP");
@@ -20,22 +21,10 @@ export default function UserOtp({ otp, email }) {
       inputRefs.current[0].focus();
     }
   }, []);
-  //
 
-  const submitHandler = (userOtp) => {
-    console.log(userOtp);
+  const submitHandler = (Otp) => {
+    setFinalOtp(Otp);
   };
-  const handleFocus = (index, e) => {
-    // //
-    // inputRefs.current[index]?.select();
-    // if (!e.target.value) {
-    //   inputRefs.current[index - 1]?.focus();
-    // } else {
-    //   inputRefs.current[index + 1]?.focus();
-    // }
-  };
-
-  //
 
   const handleChange = (index, e) => {
     const value = e.target.value;
@@ -61,17 +50,11 @@ export default function UserOtp({ otp, email }) {
   //
 
   const handleclick = (index, e) => {
-    //
-
     inputRefs.current[index]?.select();
     if (index > 0 && !userOtp[index - 1]) {
-      //
-
       inputRefs.current[userOtp.indexOf("")]?.focus();
     }
   };
-
-  //
 
   const backKeyDownHandler = (index, e) => {
     if (e.key == "Backspace") {
@@ -105,8 +88,6 @@ export default function UserOtp({ otp, email }) {
               .fill(0)
               .map((_, index) => (
                 <input
-                  //
-
                   ref={(input) => (inputRefs.current[index] = input)}
                   key={index}
                   type="text"
@@ -124,7 +105,6 @@ export default function UserOtp({ otp, email }) {
                 />
               ))}
           </div>
-          {/* <Link href="/user-page"> */}
           <div
             type="submit"
             value="VERIFY"
@@ -133,7 +113,6 @@ export default function UserOtp({ otp, email }) {
           >
             VERIFY
           </div>
-          {/* </Link> */}
         </div>
       </div>
     </div>

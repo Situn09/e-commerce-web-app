@@ -50,39 +50,21 @@ export default function LogIn() {
   const [otp, setOtp] = useState(null);
 
   const [openOTPScreen, setOTPScreen] = useState(false);
+  // if (password) setOTPScreen(true);
   const sendOTP = async () => {
     const otp = Math.floor(Math.random() * 100000000);
-    let emailBody = `<h2> Your OTP is </h2> <br/> ${otp}`;
-    const subject = "Don't share this OTP ";
+    let emailBody = `<h2> Your OTP is </h2> <br/> ${otp} <br/> Don't share this OTP `;
     setOtp(otp);
-    console.log(otp);
-    setOTPScreen(true);
-    //   const templateParams = {
-    //     from_name: email,
-    //     message: emailBody,
-    //     reply_to: email,
-    //   };
-    //   // emailjs.send(service_76fn6za, template_nskewah, templateParams);
     Email.send({
       Host: "smtp.elasticemail.com",
       Username: "chiranjivrao37@gmail.com",
       Password: "0A9F4C155DBC469512A70269F8E0C181C0C1",
       From: "chiranjivrao37@gmail.com",
       To: document.getElementById("email").value,
-      Subject: "New Contact From Enquiry",
+      Subject: "Your OTP for login",
       Body: emailBody,
     }).then((message) => alert("Message Sent Succesfully", message));
-    // const response = await fetch("/api/sendEmail", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     subject,
-    //     emailBody,
-    //   }),
-    // });
-    // console.log(await response.json());
+    setOTPScreen(true);
   };
 
   return (
@@ -126,12 +108,10 @@ export default function LogIn() {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
-            {/* <input  type="submit" value="LOGIN" className="border-2 w-[100%] mt-5 mb-11 py-[13px]   bg-black text-white"/> */}
             <div
               className="mb-11 mt-5 w-[100%] border-2 bg-black py-[13px]  text-center text-white"
               onClick={() => {
-                sendOTP();
-                setOTPScreen(true);
+                password ? sendOTP() : alert("Please fill email and password");
               }}
             >
               LOGIN
