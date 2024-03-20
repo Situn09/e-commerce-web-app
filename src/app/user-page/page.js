@@ -1,6 +1,21 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function userPage() {
+  const [userData, setUserData] = useState([]);
+  const [check, setCheck] = useState(false);
+  const checkBoxRefs = useRef([]);
+  const [lowerLimit, setlowerLimit] = useState(0);
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((resp) => resp.json())
+      .then((data) => {
+        setUserData(data);
+        console.log(data);
+      })
+      .catch((err) => console.warn(err));
+  }, [lowerLimit]);
+
   return (
     <div className="my-10 flex justify-center">
       <div className="h-[691px] w-[576px] rounded-[20px] border-2 ">
@@ -11,32 +26,39 @@ export default function userPage() {
           We will keep you notified.
         </div>
         <div className="mx-[50px]">
-          <label htmlFor="email" className=" text-[20px] font-bold">
-            My saved interests!
-          </label>{" "}
+          <label className=" text-[20px] font-bold">My saved interests!</label>{" "}
           <br />
           <div className="mt-5 flex flex-col">
-            {Array(6)
-              .fill(0)
-              .map((_, index) => (
-                <div key={index}>
-                  <input
-                  
-                    id={`item ${index}`}
-                    type="checkbox"
-                    placeholder="Enter"
-                    className=" mb-5 h-[24px] w-[24px] border-2"
-                  />
-                  <label
-
-                    htmlFor={`item ${index}`}
-                    className="mx-[5px] align-[6px] font-semibold"
-                  >
-                    {" "}
-                    {`item ${index}`}{" "}
-                  </label>
-                </div>
-              ))}
+            {userData
+              .filter(
+                (_, index) => index >= lowerLimit && index < lowerLimit + 6
+              )
+              .map((item, index) => {
+                return (
+                  <div key={item.title}>
+                    <input
+                      ref={(input) => (checkBoxRefs.current[index] = input)}
+                      id={`item ${index}`}
+                      type="checkbox"
+                      placeholder="Enter"
+                      className=" mb-5 h-[24px] w-[24px] border-2"
+                      defaultChecked={item.completed ? true : false}
+                      // value={item.completed ? "true" : "false"}
+                      // onClick={() => {
+                      //   checkBoxRefs.current[index].checked =
+                      //     !checkBoxRefs.current[index].checked;
+                      //   console.log(checkBoxRefs.current[index].checked);
+                      // }}
+                    />
+                    <label
+                      htmlFor={`item ${index}`}
+                      className="mx-[5px] align-[6px] font-semibold"
+                    >
+                      {item.title}
+                    </label>
+                  </div>
+                );
+              })}
           </div>
           <div className="flex mt-5 justify-center">
             <div>
@@ -44,11 +66,19 @@ export default function userPage() {
               <i style={style.leftArrow}></i>
               <i style={style.leftArrow}></i> <i style={style.leftArrow}></i>
             </div>
-            {Array(10)
-              .fill(0)
-              .map((_, index) => (
-                <span key={index} className="mx-3">{index +1}</span>
-              ))}
+            <div className="w-[50%] overflow-x-auto">
+              {userData
+                .filter((_, index) => index <= userData.length / 6)
+                .map((item, index) => (
+                  <span
+                    key={index}
+                    className="mx-3"
+                    onClick={() => setlowerLimit(index * 6)}
+                  >
+                    {index + 1}
+                  </span>
+                ))}
+            </div>
             <div>
               <i style={style.rightArrow}></i> <i style={style.rightArrow}></i>
               <i style={style.rightArrow}></i>{" "}

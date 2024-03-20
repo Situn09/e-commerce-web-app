@@ -3,6 +3,7 @@ import "./globals.css";
 import Image from "next/image";
 import discountImg from "../../public/images/DiscountBanner.png";
 import headerImg from "../../public/images/TopHeader.png";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,10 @@ export default function RootLayout({ children }) {
         <Image src={discountImg} alt="headerImg" style={{ width: "100%" }} />
 
         {children}
+        <Script
+          src="https://smtpjs.com/v3/smtp.js"
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );

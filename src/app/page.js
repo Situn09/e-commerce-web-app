@@ -82,11 +82,13 @@ export default async function Home() {
             placeholder="Enter"
             className="border-2 w-[100%] mt-5 mb-11 pt-[8px] pb-[5px] pr-[5px] pl-[10px]"
           />
-          <input
-            type="submit"
-            value="CREATE ACCOUNT"
-            className="border-2 w-[100%] mt-5 mb-11 py-[13px]   bg-black text-white"
-          />
+          <Link href="/login">
+            <input
+              type="submit"
+              value="CREATE ACCOUNT"
+              className="border-2 w-[100%] mt-5 mb-11 py-[13px]   bg-black text-white"
+            />
+          </Link>
         </div>
       </div>
     </div>

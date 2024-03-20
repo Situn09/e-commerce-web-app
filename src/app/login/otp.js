@@ -1,12 +1,20 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function OTP() {
-  const [otp, setOtp] = useState(new Array(8).fill(""));
-  const swa = "chi";
+export default function userOtp({ otp, email }) {
+  const router = useRouter();
+  const [userOtp, setuserOtp] = useState(new Array(8).fill(""));
+  const swa = email.substring(0, 3);
   const inputRefs = useRef([]);
-
+  const verifyCheck = () => {
+    if (otp == userOtp) {
+      router.push("/user-page");
+    } else {
+      alert("Enter right OTP");
+    }
+  };
   useEffect(() => {
     if (inputRefs.current[0]) {
       inputRefs.current[0].focus();
@@ -14,8 +22,8 @@ export default function OTP() {
   }, []);
   //
 
-  const submitHandler = (otp) => {
-    console.log(otp);
+  const submitHandler = (userOtp) => {
+    console.log(userOtp);
   };
   const handleFocus = (index, e) => {
     // //
@@ -33,12 +41,12 @@ export default function OTP() {
     const value = e.target.value;
     if (isNaN(parseInt(value))) return;
 
-    const newOtp = [...otp];
+    const newuserOtp = [...userOtp];
     // allow only on input
-    newOtp[index] = value.substring(value.length - 1);
-    setOtp(newOtp);
-    const combineOtp = newOtp.join("");
-    if (combineOtp.length === 8) submitHandler(combineOtp);
+    newuserOtp[index] = value.substring(value.length - 1);
+    setuserOtp(newuserOtp);
+    const combineuserOtp = newuserOtp.join("");
+    if (combineuserOtp.length === 8) submitHandler(combineuserOtp);
     // move to next field after fill
 
     if (value && index < 8 && inputRefs.current[index + 1]) {
@@ -56,10 +64,10 @@ export default function OTP() {
     //
 
     inputRefs.current[index]?.select();
-    if (index > 0 && !otp[index - 1]) {
+    if (index > 0 && !userOtp[index - 1]) {
       //
 
-      inputRefs.current[otp.indexOf("")]?.focus();
+      inputRefs.current[userOtp.indexOf("")]?.focus();
     }
   };
 
@@ -88,8 +96,8 @@ export default function OTP() {
           <span className="text-[16px]  font-bold"> {swa}***@gmail.com</span>
         </div>
         <div className="mx-[50px]">
-          <label htmlFor="OTP" className="mb-5 text-[16px] font-semibold">
-            OTP
+          <label htmlFor="userOtp" className="mb-5 text-[16px] font-semibold">
+            userOtp
           </label>{" "}
           <br />
           <div className="mb-11 mt-5 flex gap-[12px]">
@@ -116,14 +124,16 @@ export default function OTP() {
                 />
               ))}
           </div>
-          <Link href="/user-page">
-            <input
-              type="submit"
-              value="VERIFY"
-              className="mb-11 mt-5 w-[100%] border-2 bg-black   py-[13px] text-white"
-              onSubmit={() => submitHandler(otp.toString())}
-            />
-          </Link>
+          {/* <Link href="/user-page"> */}
+          <div
+            type="submit"
+            value="VERIFY"
+            className="mb-11 mt-5 w-[100%] border-2 bg-black text-center  py-[13px] text-white"
+            onClick={() => verifyCheck()}
+          >
+            VERIFY
+          </div>
+          {/* </Link> */}
         </div>
       </div>
     </div>
